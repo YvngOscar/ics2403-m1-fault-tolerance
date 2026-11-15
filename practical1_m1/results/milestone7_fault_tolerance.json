@@ -1,0 +1,357 @@
+{
+  "parameters": {
+    "rate_hz": 40,
+    "stream_s": 5.0,
+    "inject_at_s": 1.0,
+    "fault_duration_s": 2.0,
+    "target_node": "edge-1",
+    "replicas": [
+      "edge-1",
+      "edge-2",
+      "ran-1"
+    ],
+    "client_timeout_s": 0.25,
+    "heartbeat_interval_s": 0.1,
+    "misses_to_suspect": 3
+  },
+  "failure_comparison": [
+    {
+      "failure_type": "crash",
+      "fault_tolerance": "none",
+      "client_mode": "single",
+      "total_requests": 200,
+      "served": 120,
+      "failed_requests": 80,
+      "incorrect_results_accepted": 0,
+      "availability": 0.6,
+      "correct_service_ratio": 0.6,
+      "client_visible_downtime_s": 2.0,
+      "detection_time_s": null,
+      "detected_as": null,
+      "node_mttr_s": 2.004,
+      "requests_needing_failover": 0,
+      "messages_per_request": 1.0,
+      "p95_latency_ms": 5.908,
+      "recovery_action": "human operator restarts the node",
+      "supervisor_events": []
+    },
+    {
+      "failure_type": "crash",
+      "fault_tolerance": "with FT",
+      "client_mode": "failover",
+      "total_requests": 200,
+      "served": 200,
+      "failed_requests": 0,
+      "incorrect_results_accepted": 0,
+      "availability": 1.0,
+      "correct_service_ratio": 1.0,
+      "client_visible_downtime_s": 0.0,
+      "detection_time_s": 0.241,
+      "detected_as": "crash",
+      "node_mttr_s": 0.443,
+      "requests_needing_failover": 10,
+      "messages_per_request": 1.05,
+      "p95_latency_ms": 6.099,
+      "recovery_action": "supervisor restarts the node + failover to a replica",
+      "supervisor_events": [
+        {
+          "t_rel": 0.241,
+          "event": "failure_detected",
+          "node": "edge-1",
+          "kind": "crash"
+        },
+        {
+          "t_rel": 0.342,
+          "event": "restarted",
+          "node": "edge-1",
+          "seconds": 0.101
+        },
+        {
+          "t_rel": 0.443,
+          "event": "node_recovered",
+          "node": "edge-1"
+        }
+      ]
+    },
+    {
+      "failure_type": "omission",
+      "fault_tolerance": "none",
+      "client_mode": "single",
+      "total_requests": 200,
+      "served": 120,
+      "failed_requests": 80,
+      "incorrect_results_accepted": 0,
+      "availability": 0.6,
+      "correct_service_ratio": 0.6,
+      "client_visible_downtime_s": 2.0,
+      "detection_time_s": null,
+      "detected_as": null,
+      "node_mttr_s": null,
+      "requests_needing_failover": 0,
+      "messages_per_request": 1.0,
+      "p95_latency_ms": 5.905,
+      "recovery_action": "fault simply ends",
+      "supervisor_events": []
+    },
+    {
+      "failure_type": "omission",
+      "fault_tolerance": "with FT",
+      "client_mode": "failover",
+      "total_requests": 200,
+      "served": 200,
+      "failed_requests": 0,
+      "incorrect_results_accepted": 0,
+      "availability": 1.0,
+      "correct_service_ratio": 1.0,
+      "client_visible_downtime_s": 0.0,
+      "detection_time_s": 0.694,
+      "detected_as": "timeout",
+      "node_mttr_s": null,
+      "requests_needing_failover": 28,
+      "messages_per_request": 1.14,
+      "p95_latency_ms": 255.893,
+      "recovery_action": "failover to a replica; detector flags the node as unresponsive",
+      "supervisor_events": [
+        {
+          "t_rel": 0.694,
+          "event": "failure_detected",
+          "node": "edge-1",
+          "kind": "timeout"
+        },
+        {
+          "t_rel": 2.048,
+          "event": "node_recovered",
+          "node": "edge-1"
+        }
+      ]
+    },
+    {
+      "failure_type": "delay",
+      "fault_tolerance": "none",
+      "client_mode": "single",
+      "total_requests": 200,
+      "served": 120,
+      "failed_requests": 80,
+      "incorrect_results_accepted": 0,
+      "availability": 0.6,
+      "correct_service_ratio": 0.6,
+      "client_visible_downtime_s": 2.0,
+      "detection_time_s": null,
+      "detected_as": null,
+      "node_mttr_s": null,
+      "requests_needing_failover": 0,
+      "messages_per_request": 1.0,
+      "p95_latency_ms": 5.748,
+      "recovery_action": "fault simply ends",
+      "supervisor_events": []
+    },
+    {
+      "failure_type": "delay",
+      "fault_tolerance": "with FT",
+      "client_mode": "failover",
+      "total_requests": 200,
+      "served": 200,
+      "failed_requests": 0,
+      "incorrect_results_accepted": 0,
+      "availability": 1.0,
+      "correct_service_ratio": 1.0,
+      "client_visible_downtime_s": 0.0,
+      "detection_time_s": 0.7,
+      "detected_as": "timeout",
+      "node_mttr_s": null,
+      "requests_needing_failover": 28,
+      "messages_per_request": 1.14,
+      "p95_latency_ms": 256.005,
+      "recovery_action": "failover to a replica after the timeout; detector flags the slow node",
+      "supervisor_events": [
+        {
+          "t_rel": 0.7,
+          "event": "failure_detected",
+          "node": "edge-1",
+          "kind": "timeout"
+        },
+        {
+          "t_rel": 2.053,
+          "event": "node_recovered",
+          "node": "edge-1"
+        }
+      ]
+    },
+    {
+      "failure_type": "service_down",
+      "fault_tolerance": "none",
+      "client_mode": "single",
+      "total_requests": 200,
+      "served": 120,
+      "failed_requests": 80,
+      "incorrect_results_accepted": 0,
+      "availability": 0.6,
+      "correct_service_ratio": 0.6,
+      "client_visible_downtime_s": 2.0,
+      "detection_time_s": null,
+      "detected_as": null,
+      "node_mttr_s": null,
+      "requests_needing_failover": 0,
+      "messages_per_request": 1.0,
+      "p95_latency_ms": 5.685,
+      "recovery_action": "fault simply ends",
+      "supervisor_events": []
+    },
+    {
+      "failure_type": "service_down",
+      "fault_tolerance": "with FT",
+      "client_mode": "failover",
+      "total_requests": 200,
+      "served": 200,
+      "failed_requests": 0,
+      "incorrect_results_accepted": 0,
+      "availability": 1.0,
+      "correct_service_ratio": 1.0,
+      "client_visible_downtime_s": 0.0,
+      "detection_time_s": 0.251,
+      "detected_as": "service_failure",
+      "node_mttr_s": null,
+      "requests_needing_failover": 11,
+      "messages_per_request": 1.05,
+      "p95_latency_ms": 5.831,
+      "recovery_action": "service health probe flags it; failover to a replica",
+      "supervisor_events": [
+        {
+          "t_rel": 0.251,
+          "event": "failure_detected",
+          "node": "edge-1",
+          "kind": "service_failure"
+        },
+        {
+          "t_rel": 2.072,
+          "event": "node_recovered",
+          "node": "edge-1"
+        }
+      ]
+    },
+    {
+      "failure_type": "byzantine",
+      "fault_tolerance": "none",
+      "client_mode": "single",
+      "total_requests": 200,
+      "served": 200,
+      "failed_requests": 0,
+      "incorrect_results_accepted": 80,
+      "availability": 1.0,
+      "correct_service_ratio": 0.6,
+      "client_visible_downtime_s": 0.0,
+      "detection_time_s": null,
+      "detected_as": null,
+      "node_mttr_s": null,
+      "requests_needing_failover": 0,
+      "messages_per_request": 1.0,
+      "p95_latency_ms": 5.865,
+      "recovery_action": "fault simply ends",
+      "supervisor_events": []
+    },
+    {
+      "failure_type": "byzantine",
+      "fault_tolerance": "with FT",
+      "client_mode": "quorum",
+      "total_requests": 200,
+      "served": 200,
+      "failed_requests": 0,
+      "incorrect_results_accepted": 0,
+      "availability": 1.0,
+      "correct_service_ratio": 1.0,
+      "client_visible_downtime_s": 0.0,
+      "detection_time_s": 0.006,
+      "detected_as": "dissenting replica: edge-1",
+      "node_mttr_s": null,
+      "requests_needing_failover": 0,
+      "messages_per_request": 3.0,
+      "p95_latency_ms": 6.632,
+      "recovery_action": "quorum voting outvotes the lying node (no detection by heartbeat is possible)",
+      "supervisor_events": []
+    }
+  ],
+  "leader_failure": {
+    "initial_leader": "cloud-1",
+    "detection_time_s": 0.208,
+    "detected_as": "crash",
+    "reelection_after_crash": {
+      "new_leader": "core-1",
+      "rounds": 4,
+      "messages": 10,
+      "consistent_across_alive_nodes": true,
+      "seconds_after_crash": 0.21
+    },
+    "restart_seconds": 0.102,
+    "leader_reclaimed_by_recovered_node": {
+      "leader": "cloud-1",
+      "rounds": 1,
+      "messages": 5,
+      "consistent": true,
+      "seconds_after_crash": 0.416
+    },
+    "final_views": {
+      "edge-1": "cloud-1",
+      "edge-2": "cloud-1",
+      "ran-1": "cloud-1",
+      "core-1": "cloud-1",
+      "cloud-1": "cloud-1"
+    },
+    "final_leader_consistent": true
+  },
+  "availability_model": [
+    {
+      "single_replica_availability": 0.95,
+      "replicas": 1,
+      "system_availability": 0.95,
+      "downtime_hours_per_year": 438.0
+    },
+    {
+      "single_replica_availability": 0.95,
+      "replicas": 2,
+      "system_availability": 0.9975,
+      "downtime_hours_per_year": 21.9
+    },
+    {
+      "single_replica_availability": 0.95,
+      "replicas": 3,
+      "system_availability": 0.999875,
+      "downtime_hours_per_year": 1.095
+    },
+    {
+      "single_replica_availability": 0.99,
+      "replicas": 1,
+      "system_availability": 0.99,
+      "downtime_hours_per_year": 87.6
+    },
+    {
+      "single_replica_availability": 0.99,
+      "replicas": 2,
+      "system_availability": 0.9999,
+      "downtime_hours_per_year": 0.876
+    },
+    {
+      "single_replica_availability": 0.99,
+      "replicas": 3,
+      "system_availability": 0.999999,
+      "downtime_hours_per_year": 0.0088
+    },
+    {
+      "single_replica_availability": 0.999,
+      "replicas": 1,
+      "system_availability": 0.999,
+      "downtime_hours_per_year": 8.76
+    },
+    {
+      "single_replica_availability": 0.999,
+      "replicas": 2,
+      "system_availability": 0.999999,
+      "downtime_hours_per_year": 0.0088
+    },
+    {
+      "single_replica_availability": 0.999,
+      "replicas": 3,
+      "system_availability": 1.0,
+      "downtime_hours_per_year": 0.0
+    }
+  ]
+}

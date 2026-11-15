@@ -1,0 +1,6 @@
+failure_type,events,mean_detection_s,p50_detection_s,p95_detection_s,p99_detection_s,mean_failover_requests,mean_wasted_client_s_with_ft,mean_downtime_s_without_ft,mean_corrupted_results_without_ft
+crash,29758,0.2562,0.2562,0.3012,0.305,10.246,0.0,1.9858,0.0
+delay,25022,0.6999,0.7001,0.7452,0.7489,27.998,6.9994,2.0013,0.0
+service_down,20048,0.2558,0.2555,0.3011,0.305,10.233,0.0,1.9612,0.0
+omission,15204,0.7001,0.7001,0.7447,0.7489,28.006,7.0015,1.9748,0.0
+byzantine,9968,0.0126,0.0126,0.0238,0.0247,0.0,0.0,0.0,79.759
