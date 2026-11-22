@@ -1,0 +1,433 @@
+{
+  "parameters": {
+    "names": 1000,
+    "zipf_s": 1.1,
+    "rounds": 3,
+    "zones": {
+      "/edge": "edge-1",
+      "/ran": "ran-1",
+      "/core": "core-1",
+      "/cloud": "cloud-1",
+      "/proc": "core-1"
+    },
+    "weights": {
+      "latency": 0.2,
+      "exchanges": 0.1,
+      "staleness": 0.2,
+      "fault_tolerance": 0.2,
+      "update_cost": 0.15,
+      "scalability": 0.15
+    }
+  },
+  "naming": {
+    "latency": {
+      "static_map": {
+        "scheme": "Static map",
+        "mean_latency_us": 0.1,
+        "p95_latency_us": 0.1,
+        "exchanges_per_lookup": 0.0,
+        "correct_fraction": 1.0,
+        "cache_hit_rate": null
+      },
+      "broadcast": {
+        "scheme": "Broadcast",
+        "mean_latency_us": 671.1,
+        "p95_latency_us": 847.4,
+        "exchanges_per_lookup": 5.0,
+        "correct_fraction": 1.0,
+        "cache_hit_rate": null
+      },
+      "name_server": {
+        "scheme": "Central name server",
+        "mean_latency_us": 81.5,
+        "p95_latency_us": 130.6,
+        "exchanges_per_lookup": 1.0,
+        "correct_fraction": 1.0,
+        "cache_hit_rate": null
+      },
+      "prefix_table": {
+        "scheme": "Prefix table (zones)",
+        "mean_latency_us": 97.3,
+        "p95_latency_us": 163.4,
+        "exchanges_per_lookup": 1.0,
+        "correct_fraction": 1.0,
+        "cache_hit_rate": null
+      },
+      "dns_style": {
+        "scheme": "DNS-style (root + cache)",
+        "mean_latency_us": 21.6,
+        "p95_latency_us": 103.7,
+        "exchanges_per_lookup": 0.219,
+        "correct_fraction": 1.0,
+        "cache_hit_rate": 0.782
+      }
+    },
+    "throughput": {
+      "static_map": {
+        "scheme": "Static map",
+        "lookups_per_second": 3432804,
+        "correct_fraction": 1.0
+      },
+      "broadcast": {
+        "scheme": "Broadcast",
+        "lookups_per_second": 1533,
+        "correct_fraction": 1.0
+      },
+      "name_server": {
+        "scheme": "Central name server",
+        "lookups_per_second": 12566,
+        "correct_fraction": 1.0
+      },
+      "prefix_table": {
+        "scheme": "Prefix table (zones)",
+        "lookups_per_second": 10114,
+        "correct_fraction": 1.0
+      },
+      "dns_style": {
+        "scheme": "DNS-style (root + cache)",
+        "lookups_per_second": 45444,
+        "correct_fraction": 1.0
+      }
+    },
+    "names_scaling": [
+      {
+        "names": 100,
+        "registration_seconds": 0.002,
+        "name_server_mean_us": 78.5,
+        "prefix_table_mean_us": 93.6,
+        "broadcast_mean_us": 655.9
+      },
+      {
+        "names": 1000,
+        "registration_seconds": 0.004,
+        "name_server_mean_us": 80.0,
+        "prefix_table_mean_us": 93.3,
+        "broadcast_mean_us": 655.9
+      },
+      {
+        "names": 10000,
+        "registration_seconds": 0.02,
+        "name_server_mean_us": 79.6,
+        "prefix_table_mean_us": 94.0,
+        "broadcast_mean_us": 672.2
+      }
+    ],
+    "staleness": {
+      "static_map": {
+        "scheme": "Static map",
+        "stale_before_update": 1.0,
+        "stale_after_update": 0.0,
+        "stale_after_ttl": 0.0,
+        "update_exchanges_per_move": 10.0
+      },
+      "broadcast": {
+        "scheme": "Broadcast",
+        "stale_before_update": 0.0,
+        "stale_after_update": 0.0,
+        "stale_after_ttl": 0.0,
+        "update_exchanges_per_move": 0.0
+      },
+      "name_server": {
+        "scheme": "Central name server",
+        "stale_before_update": 1.0,
+        "stale_after_update": 0.0,
+        "stale_after_ttl": 0.0,
+        "update_exchanges_per_move": 1.0
+      },
+      "prefix_table": {
+        "scheme": "Prefix table (zones)",
+        "stale_before_update": 1.0,
+        "stale_after_update": 0.0,
+        "stale_after_ttl": 0.0,
+        "update_exchanges_per_move": 1.0
+      },
+      "dns_style": {
+        "scheme": "DNS-style (root + cache)",
+        "stale_before_update": 1.0,
+        "stale_after_update": 0.5,
+        "stale_after_ttl": 0.0,
+        "update_exchanges_per_move": 1.0
+      }
+    },
+    "fault_tolerance": {
+      "static_map": {
+        "scheme": "Static map",
+        "resolution_success_with_core1_dead": 1.0
+      },
+      "broadcast": {
+        "scheme": "Broadcast",
+        "resolution_success_with_core1_dead": 0.902
+      },
+      "name_server": {
+        "scheme": "Central name server",
+        "resolution_success_with_core1_dead": 0.0
+      },
+      "prefix_table": {
+        "scheme": "Prefix table (zones)",
+        "resolution_success_with_core1_dead": 0.902
+      },
+      "dns_style": {
+        "scheme": "DNS-style (root + cache)",
+        "resolution_success_with_core1_dead": 0.954
+      }
+    },
+    "share_of_lookups_hosted_on_failed_node": 0.098,
+    "scorecard_metrics": {
+      "latency": {
+        "static_map": 0.1,
+        "broadcast": 671.1,
+        "name_server": 81.5,
+        "prefix_table": 97.3,
+        "dns_style": 21.6
+      },
+      "exchanges": {
+        "static_map": 0.0,
+        "broadcast": 5.0,
+        "name_server": 1.0,
+        "prefix_table": 1.0,
+        "dns_style": 0.219
+      },
+      "staleness": {
+        "static_map": 0.0,
+        "broadcast": 0.0,
+        "name_server": 0.0,
+        "prefix_table": 0.0,
+        "dns_style": 0.5
+      },
+      "fault_tolerance": {
+        "static_map": 1.0,
+        "broadcast": 0.902,
+        "name_server": 0.0,
+        "prefix_table": 0.902,
+        "dns_style": 0.954
+      },
+      "update_cost": {
+        "static_map": 10.0,
+        "broadcast": 0.0,
+        "name_server": 1.0,
+        "prefix_table": 1.0,
+        "dns_style": 1.0
+      },
+      "scalability": {
+        "static_map": 50000,
+        "broadcast": 500000,
+        "name_server": 1010,
+        "prefix_table": 1010,
+        "dns_style": 227.99999999999997
+      }
+    },
+    "scorecards": {
+      "weighted_linear": {
+        "static_map": 0.8351,
+        "broadcast": 0.5304,
+        "name_server": 0.7405,
+        "prefix_table": 0.9162,
+        "dns_style": 0.765
+      },
+      "equal_linear": {
+        "static_map": 0.8167,
+        "broadcast": 0.4837,
+        "name_server": 0.7629,
+        "prefix_table": 0.9093,
+        "dns_style": 0.7964
+      },
+      "weighted_log": {
+        "static_map": 0.7449,
+        "broadcast": 0.5304,
+        "name_server": 0.5544,
+        "prefix_table": 0.7293,
+        "dns_style": 0.6422
+      },
+      "equal_log": {
+        "static_map": 0.7166,
+        "broadcast": 0.4837,
+        "name_server": 0.5763,
+        "prefix_table": 0.7221,
+        "dns_style": 0.6805
+      }
+    },
+    "rankings": {
+      "weighted_linear": [
+        "prefix_table",
+        "static_map",
+        "dns_style",
+        "name_server",
+        "broadcast"
+      ],
+      "equal_linear": [
+        "prefix_table",
+        "static_map",
+        "dns_style",
+        "name_server",
+        "broadcast"
+      ],
+      "weighted_log": [
+        "static_map",
+        "prefix_table",
+        "dns_style",
+        "name_server",
+        "broadcast"
+      ],
+      "equal_log": [
+        "prefix_table",
+        "static_map",
+        "dns_style",
+        "name_server",
+        "broadcast"
+      ]
+    }
+  },
+  "process_management": {
+    "naming_scheme_used": "prefix_table",
+    "lifecycle": {
+      "stages": {
+        "create": {
+          "mean_ms": 0.001,
+          "p95_ms": 0.001,
+          "samples": 200
+        },
+        "schedule": {
+          "mean_ms": 0.006,
+          "p95_ms": 0.009,
+          "samples": 200
+        },
+        "start": {
+          "mean_ms": 0.131,
+          "p95_ms": 0.221,
+          "samples": 200
+        },
+        "register": {
+          "mean_ms": 0.098,
+          "p95_ms": 0.166,
+          "samples": 200
+        },
+        "locate": {
+          "mean_ms": 0.081,
+          "p95_ms": 0.129,
+          "samples": 200
+        },
+        "terminate": {
+          "mean_ms": 0.202,
+          "p95_ms": 0.304,
+          "samples": 200
+        }
+      },
+      "rejected": 0,
+      "leak_check": {
+        "max_cpu_utilization_after": 0.0,
+        "processes_still_running": 0
+      }
+    },
+    "policies": {
+      "round_robin": {
+        "load_balance_jain_index": 0.885,
+        "mean_distance_rtt_ms": 9.37,
+        "urllc_mean_distance_rtt_ms": 9.62,
+        "max_node_utilization": 0.953,
+        "rejected_processes": 0
+      },
+      "least_loaded": {
+        "load_balance_jain_index": 0.982,
+        "mean_distance_rtt_ms": 13.63,
+        "urllc_mean_distance_rtt_ms": 20.25,
+        "max_node_utilization": 0.745,
+        "rejected_processes": 0
+      },
+      "location_aware": {
+        "load_balance_jain_index": 0.93,
+        "mean_distance_rtt_ms": 10.03,
+        "urllc_mean_distance_rtt_ms": 3.12,
+        "max_node_utilization": 0.865,
+        "rejected_processes": 0
+      }
+    },
+    "creation_throughput": [
+      {
+        "concurrent_creators": 1,
+        "lifecycles_per_second": 2053.5,
+        "completed": 25,
+        "failed": 0
+      },
+      {
+        "concurrent_creators": 4,
+        "lifecycles_per_second": 1880.6,
+        "completed": 100,
+        "failed": 0
+      },
+      {
+        "concurrent_creators": 16,
+        "lifecycles_per_second": 1809.9,
+        "completed": 400,
+        "failed": 0
+      }
+    ],
+    "group": {
+      "normal_group": {
+        "status": "started",
+        "twopc_ms": 0.759,
+        "placements": {
+          "/proc/pipe-auth": "edge-1",
+          "/proc/pipe-qos": "edge-2",
+          "/proc/pipe-billing": "ran-1"
+        },
+        "all_members_locatable_by_name": true,
+        "leak_check_after_terminate": {
+          "max_cpu_utilization_after": 0.0,
+          "processes_still_running": 0
+        }
+      },
+      "forced_abort": {
+        "status": "aborted",
+        "reason": "a_node_voted_abort",
+        "votes": {
+          "edge-1": "abort",
+          "edge-2": "abort",
+          "ran-1": "abort"
+        },
+        "group_processes_running_anywhere": 0,
+        "cpu_utilization_after_abort": {
+          "edge-1": 0.875,
+          "edge-2": 0.875,
+          "ran-1": 0.9167
+        },
+        "hidden_load_only_expected": {
+          "edge-1": 0.875,
+          "edge-2": 0.875,
+          "ran-1": 0.9167
+        },
+        "no_resources_leaked": true
+      }
+    },
+    "migration": {
+      "make_before_break": {
+        "moved_from": "edge-1",
+        "moved_to": "edge-2",
+        "migration_seconds": 0.051,
+        "polls": 182,
+        "failed_locates": 0,
+        "estimated_downtime_ms": 0,
+        "name_resolves_to_new_node_after": true
+      },
+      "break_before_make": {
+        "moved_from": "edge-1",
+        "moved_to": "edge-2",
+        "migration_seconds": 0.051,
+        "polls": 187,
+        "failed_locates": 22,
+        "estimated_downtime_ms": 44,
+        "name_resolves_to_new_node_after": true
+      }
+    },
+    "respawn": {
+      "processes_before": 12,
+      "processes_on_victim": 3,
+      "victim_node": "edge-1",
+      "detection_seconds": 0.207,
+      "all_restored_after_seconds": 0.209,
+      "restored": 3,
+      "failed_to_restore": 0,
+      "names_resolving_to_a_live_running_process": 12,
+      "names_total": 12
+    }
+  }
+}
